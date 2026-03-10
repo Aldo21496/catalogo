@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo Digital Responsive - Efecto Revista</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="turn.min.js"></script>
+    <style>
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: #1a1a2e;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      #catalog-title {
+        color: white;
+        font-size: 1.2em;
+        margin: 15px 0 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+
+      #flipbook-wrapper {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 10px;
+      }
+
+      #flipbook {
+        margin: 0 auto;
+        background: transparent;
+      }
+
+      .page {
+        position: relative;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .page img {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+
+      .hard {
+        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important;
+        color: white;
+        text-align: center;
+        font-size: 2em;
+        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      .hard .subtitle {
+        font-size: 0.45em;
+        opacity: 0.7;
+        margin-top: 8px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+
+      .buy-button {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 22px;
+        background: #e91e63;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 0.95em;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        transition: all 0.3s;
+        z-index: 10;
+        white-space: nowrap;
+      }
+
+      .buy-button:hover,
+      .buy-button:active {
+        background: #c2185b;
+        transform: translateX(-50%) scale(1.06);
+      }
+
+      #page-indicator {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9em;
+        margin: 10px 0 5px;
+      }
+
+      #nav-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin: 12px 0 20px;
+        width: 100%;
+        padding: 0 10px;
+      }
+
+      #nav-buttons button {
+        padding: 12px 28px;
+        font-size: 1em;
+        background: rgba(255,255,255,0.15);
+        color: white;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex: 1;
+        max-width: 160px;
+      }
+
+      #nav-buttons button:hover,
+      #nav-buttons button:active {
+        background: rgba(255,255,255,0.3);
+        border-color: white;
+      }
+
+      #swipe-hint {
+        display: none;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.8em;
+        margin-bottom: 8px;
+      }
+
+      @media (max-width: 900px) {
+        .hard { font-size: 1.6em; }
+      }
+      @media (max-width: 600px) {
+        #catalog-title { font-size: 1em; margin: 10px 0 8px; }
+        .hard { font-size: 1.3em; padding: 15px; }
+        .buy-button { padding: 8px 16px; font-size: 0.8em; bottom: 10px; }
+        #nav-buttons { gap: 10px; margin: 10px 0 15px; }
+        #nav-buttons button { padding: 10px 14px; font-size: 0.88em; max-width: 130px; }
+        #swipe-hint { display: block; }
+      }
+      @media (max-width: 360px) {
+        .hard { font-size: 1.1em; }
+        .buy-button { font-size: 0.75em; padding: 7px 12px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="catalog-title">📖 Mi Catálogo 2026</div>
+
+    <div id="flipbook-wrapper">
+      <div id="flipbook">
+
+        <div class="hard">
+          Mi Catálogo
+          <span class="subtitle">Edición 2026</span>
+        </div>
+        <div class="hard"></div>
+
+        <div class="page">
+          <img src="pages/pagina1.jpg" alt="Página 1" />
+          <button class="buy-button"
+            onclick="window.open('https://tutienda.com/producto1', '_blank')">
+            🛒 Comprar - $1.299
+          </button>
+        </div>
+
+        <div class="page">
+          <img src="pages/pagina2.jpg" alt="Página 2" />
+          <button class="buy-button"
+            onclick="alert('¡Producto 2 agregado al carrito!')">
+            🛍️ Agregar al Carrito
+          </button>
+        </div>
+
+        <div class="page">
+          <img src="pages/pagina3.jpg" alt="Página 3" />
+          <button class="buy-button"
+            onclick="window.location.href='https://wa.me/549XXXXXXXXXX'">
+            💬 Contactar por WhatsApp
+          </button>
+        </div>
+
+        <div class="page">
+          <img src="pages/pagina4.jpg" alt="Página 4" />
+        </div>
+
+        <div class="hard"></div>
+        <div class="hard">
+          ¡Gracias por visitar!
+          <span class="subtitle">© 2026 — Todos los derechos reservados</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="page-indicator">Página 1</div>
+    <div id="swipe-hint">👆 Deslizá o usá los botones para navegar</div>
+
+    <div id="nav-buttons">
+      <button id="btn-prev" onclick="prevPage()">◀ Anterior</button>
+      <button id="btn-next" onclick="nextPage()">Siguiente ▶</button>
+    </div>
+
+    <script>
+      let flipbook = null;
+      let currentDisplayMode = null;
+
+      function getLayout() {
+        const winWidth  = $(window).width();
+        const winHeight = $(window).height();
+        let bookWidth, bookHeight, displayMode;
+
+        if (winWidth > 900) {
+          bookWidth   = Math.min(1000, winWidth * 0.88);
+          bookHeight  = bookWidth * 0.7;
+          displayMode = "double";
+        } else if (winWidth > 600) {
+          bookWidth   = winWidth * 0.92;
+          bookHeight  = bookWidth * 0.8;
+          displayMode = "double";
+        } else {
+          bookWidth   = winWidth * 0.96;
+          bookHeight  = Math.min(bookWidth * 1.45, winHeight * 0.65);
+          displayMode = "single";
+        }
+
+        return { bookWidth, bookHeight, displayMode,
+                 pageWidth: displayMode === "double" ? bookWidth / 2 : bookWidth };
+      }
+
+      function applyDimensions(layout) {
+        $("#flipbook").css({ width: layout.bookWidth, height: layout.bookHeight });
+        $("#flipbook .page, #flipbook .hard").css({
+          width:  layout.pageWidth,
+          height: layout.bookHeight
+        });
+      }
+
+      function reloadImages() {
+        // Fuerza que el navegador redibuje las imágenes sin hacer fetch de red
+        $("#flipbook .page img").each(function() {
+          const src = $(this).attr("src");
+          $(this).attr("src", "").attr("src", src);
+        });
+      }
+
+      function updateIndicator() {
+        if (!flipbook) return;
+        const current = flipbook.turn("page");
+        const total   = flipbook.turn("pages");
+        $("#page-indicator").text("Página " + current + " de " + total);
+        $("#btn-prev").css("opacity", current <= 1    ? 0.4 : 1);
+        $("#btn-next").css("opacity", current >= total ? 0.4 : 1);
+      }
+
+      function prevPage() { if (flipbook) flipbook.turn("previous"); }
+      function nextPage() { if (flipbook) flipbook.turn("next");     }
+
+      function buildFlipbook(layout) {
+        // Destruir instancia anterior si existe
+        if (flipbook) {
+          try { flipbook.turn("destroy"); } catch(e) {}
+          flipbook = null;
+        }
+
+        applyDimensions(layout);
+
+        flipbook = $("#flipbook").turn({
+          width:        layout.bookWidth,
+          height:       layout.bookHeight,
+          elevation:    50,
+          gradients:    true,
+          autoCenter:   true,
+          acceleration: true,
+          display:      layout.displayMode,
+          turnCorners:  "bl,br,tl,tr",
+          when: {
+            turned: function() { updateIndicator(); }
+          }
+        });
+
+        currentDisplayMode = layout.displayMode;
+
+        // Recargar imágenes después de que turn.js termine de montar el DOM
+        setTimeout(function() {
+          reloadImages();
+          updateIndicator();
+        }, 150);
+      }
+
+      function onResize() {
+        const layout = getLayout();
+
+        // ── CASO 1: mismo modo display → solo redimensionar, SIN destruir ──
+        if (flipbook && layout.displayMode === currentDisplayMode) {
+          const currentPage = flipbook.turn("page");
+
+          applyDimensions(layout);
+
+          try {
+            flipbook.turn("size", layout.bookWidth, layout.bookHeight);
+          } catch(e) {
+            // Si turn no soporta resize, reconstruir
+            buildFlipbook(layout);
+            return;
+          }
+
+          // Volver a la página donde estaba
+          try { flipbook.turn("page", currentPage); } catch(e) {}
+
+          setTimeout(function() {
+            reloadImages();
+            updateIndicator();
+          }, 100);
+
+        // ── CASO 2: cambió el modo (single ↔ double) → reconstruir ──
+        } else {
+          const currentPage = flipbook ? flipbook.turn("page") : 1;
+          buildFlipbook(layout);
+          // Intentar restaurar página después de reconstruir
+          setTimeout(function() {
+            try { flipbook.turn("page", currentPage); } catch(e) {}
+          }, 200);
+        }
+      }
+
+      // Touch swipe
+      function initTouchSwipe() {
+        let startX = 0;
+        document.getElementById("flipbook").addEventListener("touchstart", function(e) {
+          startX = e.touches[0].clientX;
+        }, { passive: true });
+        document.getElementById("flipbook").addEventListener("touchend", function(e) {
+          const diff = startX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) nextPage(); else prevPage();
+          }
+        }, { passive: true });
+      }
+
+      // Teclado
+      $(document).on("keydown", function(e) {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") nextPage();
+        if (e.key === "ArrowLeft"  || e.key === "ArrowUp")   prevPage();
+      });
+
+      // Init
+      $(document).ready(function() {
+        buildFlipbook(getLayout());
+        initTouchSwipe();
+      });
+
+      // Resize con debounce
+      let resizeTimer;
+      $(window).on("resize orientationchange", function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(onResize, 300);
+      });
+    </script>
+  </body>
+</html>
